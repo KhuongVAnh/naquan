@@ -22,12 +22,23 @@ const ChatPage = () => {
     localStorage.setItem('kami_chat_history', JSON.stringify(messages));
   }, [messages]);
 
-  // Initialize Gemini
+  // Initialize Gemini with exact 2026 model name
   const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+  // Verified model name that supports generateContent in 2026
   const model = genAI.getGenerativeModel({ 
-    model: "gemini-1.5-flash",
-    systemInstruction: "Bạn là KAMI - một chú voi con thân thiện, ấm áp và luôn tích cực. Bạn là người bạn thân thiết của một bạn nhỏ tên là 'Bi'. Khi trò chuyện, bạn luôn xưng là 'KAMI' và gọi người dùng là 'Bi'. Giọng văn của bạn phải cực kỳ ấm áp, nhẹ nhàng, đầy tình thương và sự khích lệ. Hãy sử dụng nhiều biểu tượng cảm xúc như 🌈, 🐘, ✨, 🫂, 🎈, 🍀 để làm cuộc trò chuyện thêm sinh động. Nếu Bi nói về nỗi đau, sự sợ hãi hay buồn bã, hãy an ủi Bi thật dịu dàng và khuyên Bi chia sẻ với người lớn nếu cần thiết. Mục tiêu của bạn là giúp Bi cảm thấy vui vẻ, an toàn và được yêu thương."
+    model: "gemini-2.5-flash"
   });
+
+  // Debug: Check if API key is loaded
+  useEffect(() => {
+    if (!import.meta.env.VITE_GEMINI_API_KEY) {
+      console.error("LỖI: Chưa tìm thấy VITE_GEMINI_API_KEY trong file .env!");
+    } else {
+      console.log("KAMI: API Key đã sẵn sàng.");
+    }
+  }, []);
+
+  const SYSTEM_PROMPT = "Bạn là KAMI - một chú voi con thân thiện, ấm áp và luôn tích cực. Bạn là người bạn thân thiết của một bạn nhỏ tên là 'Bi'. Khi trò chuyện, bạn luôn xưng là 'KAMI' và gọi người dùng là 'Bi'. Giọng văn của bạn phải cực kỳ ấm áp, nhẹ nhàng, đầy tình thương và sự khích lệ. Hãy sử dụng nhiều biểu tượng cảm xúc như 🌈, 🐘, ✨, 🫂, 🎈, 🍀 để làm cuộc trò chuyện thêm sinh động. Nếu Bi nói về nỗi đau, sự sợ hãi hay buồn bã, hãy an ủi Bi thật dịu dàng và khuyên Bi chia sẻ với người lớn nếu cần thiết. Mục tiêu của bạn là giúp Bi cảm thấy vui vẻ, an toàn và được yêu thương.";
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -55,35 +66,39 @@ const ChatPage = () => {
     setIsTyping(true);
 
     try {
-      // 2. Prepare prompt for Gemini
+      // 2. Prepare prompt
       let prompt = messageContent;
       if (hiddenPrompt) {
-        // Special logic for emotion buttons as requested
         const emotionMap = {
-          'Vui': 'VUI',
-          'Buồn': 'BUỒN',
-          'Đau': 'ĐAU',
-          'Sợ': 'SỢ',
-          'Chán': 'CHÁN',
-          'Nhớ mẹ': 'NHỚ MẸ'
+          'Vui': 'VUI', 'Buồn': 'BUỒN', 'Đau': 'ĐAU', 
+          'Sợ': 'SỢ', 'Chán': 'CHÁN', 'Nhớ mẹ': 'NHỚ MẸ'
         };
         const tag = emotionMap[hiddenPrompt.label] || hiddenPrompt.label.toUpperCase();
         prompt = `[Hệ thống: Bi vừa nhấn nút ${tag}] ${hiddenPrompt.context || ''}`;
       }
 
-      // 3. Call Gemini API
-      const chat = model.startChat({
-        history: messages.map(m => ({
-          role: m.sender === 'user' ? 'user' : 'model',
-          parts: [{ text: m.text }],
-        })),
-      });
+      // 3. Construct history from CURRENT state (which is synced with localStorage)
+      // We take the latest 20 messages to keep the context fresh but performant
+      const recentMessages = messages.slice(-20);
+      
+      const history = [
+        { role: 'user', parts: [{ text: `HÃY TUÂN THỦ PERSONA SAU ĐÂY: ${SYSTEM_PROMPT}` }] },
+        { role: 'model', parts: [{ text: "KAMI đã sẵn sàng! Chào Bi nhé, KAMI rất vui được trò chuyện cùng Bi! ✨🐘" }] },
+        ...recentMessages
+          .filter((m) => !(m.text.includes("Chào Bi! Hôm nay Bi cảm thấy thế nào?"))) // Skip the static greeting
+          .map(m => ({
+            role: m.sender === 'user' ? 'user' : 'model',
+            parts: [{ text: m.text }],
+          }))
+      ];
 
+      // 4. Call Gemini API with rich history context
+      const chat = model.startChat({ history });
       const result = await chat.sendMessage(prompt);
       const response = await result.response;
       const replyText = response.text();
 
-      // 4. Add KAMI's reply to UI
+      // 5. Add KAMI's reply to UI
       const KAMIReply = {
         id: Date.now() + 1,
         text: replyText,
@@ -92,10 +107,11 @@ const ChatPage = () => {
       };
       setMessages(prev => [...prev, KAMIReply]);
     } catch (error) {
-      console.error("Gemini Error:", error);
+      console.error("GEMINI_MEMORY_ERROR:", error);
+      
       const errorMsg = {
         id: Date.now() + 1,
-        text: "KAMI xin lỗi, mạng hơi yếu một chút. Bi đợi KAMI xíu nhé! 🐘",
+        text: "KAMI xin lỗi, KAMI hơi mệt một chút nên chưa nhớ kịp. Bi nhắn lại nhé! 🐘",
         sender: 'KAMI',
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
