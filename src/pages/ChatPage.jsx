@@ -7,12 +7,20 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const ChatPage = () => {
   const navigate = useNavigate();
-  const [messages, setMessages] = useState([
-    { id: 1, text: "Chào Bi! Hôm nay Bi cảm thấy thế nào? KAMI ở đây để lắng nghe Bi nè. ✨", sender: 'KAMI', time: '09:00' }
-  ]);
+  const [messages, setMessages] = useState(() => {
+    const saved = localStorage.getItem('kami_chat_history');
+    return saved ? JSON.parse(saved) : [
+      { id: 1, text: "Chào Bi! Hôm nay Bi cảm thấy thế nào? KAMI ở đây để lắng nghe Bi nè. ✨", sender: 'KAMI', time: '09:00' }
+    ];
+  });
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef(null);
+
+  // Persistence: Save to localStorage
+  useEffect(() => {
+    localStorage.setItem('kami_chat_history', JSON.stringify(messages));
+  }, [messages]);
 
   // Initialize Gemini
   const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
