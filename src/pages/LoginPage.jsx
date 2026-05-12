@@ -2,14 +2,17 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import kamiAvatar from '../assets/KAMI_avatar.png';
+import { useToast } from '../context/ToastContext';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { showToast } = useToast();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = (e) => {
     e.preventDefault();
+    showToast("Đăng nhập thành công! 👋");
     // Redirect regardless of input as per requirements
     navigate('/dashboard');
   };
@@ -28,7 +31,7 @@ const LoginPage = () => {
           </p>
         </div>
 
-        <div className="w-32 h-32 mx-auto mb-xl rounded-full bg-primary-container/20 flex items-center justify-center border-4 border-white shadow-lg overflow-hidden">
+        <div className="w-32 h-32 mx-auto mb-xl rounded-[2.5rem] bg-primary-container/20 flex items-center justify-center border-4 border-white shadow-lg overflow-hidden">
           <img src={kamiAvatar} alt="KAMI" className="w-full h-full object-cover" />
         </div>
 

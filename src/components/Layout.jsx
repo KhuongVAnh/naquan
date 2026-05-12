@@ -15,51 +15,55 @@ const Layout = () => {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-background text-on-background font-nunito pb-20 overflow-x-hidden">
-      <main className="flex-1 relative">
+    <div className="h-full bg-background flex flex-col max-w-md mx-auto relative shadow-2xl overflow-hidden border-x border-gray-100">
+      {/* Global Background Decorations */}
+      <div className="absolute inset-0 bg-pattern pointer-events-none" />
+      <div className="floating-blob bg-primary/10 w-64 h-64 -top-20 -left-20" />
+      <div className="floating-blob bg-secondary/10 w-48 h-48 top-1/2 -right-10" />
+      <div className="floating-blob bg-tertiary/10 w-56 h-56 -bottom-10 left-10" />
+
+      {/* Main Content Area */}
+      <div className="flex-1 relative z-10 flex flex-col min-h-0">
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="w-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            className="flex-1 flex flex-col min-h-0 overflow-hidden"
           >
             <Outlet />
           </motion.div>
         </AnimatePresence>
-      </main>
-      
+      </div>
+
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t border-surface-container-highest px-2 py-2 z-50 flex justify-around items-center shadow-[0_-4px_24px_rgba(41,105,86,0.08)] rounded-t-2xl">
-        {navItems.map(({ to, icon: Icon, label }) => (
-          <NavLink
-            key={to}
-            to={to}
-            className={({ isActive }) => 
-              `flex flex-col items-center gap-1 p-2 rounded-2xl transition-all duration-300 relative ${
-                isActive 
-                ? 'text-primary' 
-                : 'text-on-surface-variant'
-              }`
-            }
-          >
-            {({ isActive }) => (
-              <>
-                {isActive && (
-                  <motion.div 
-                    layoutId="nav-pill"
-                    className="absolute inset-0 bg-primary-container/30 rounded-2xl -z-10"
-                    transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
-                  />
-                )}
-                <Icon size={24} className={`transition-transform ${isActive ? 'scale-110' : 'scale-100 hover:scale-110'}`} />
-                <span className="text-[10px] font-bold font-nunito">{label}</span>
-              </>
-            )}
-          </NavLink>
-        ))}
+      <nav className="bg-white/95 backdrop-blur-xl border-t border-surface-container-highest px-2 pb-4 pt-2 z-50 shrink-0">
+        <div className="flex justify-around items-center max-w-md mx-auto">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) =>
+                `flex flex-col items-center justify-center gap-1 transition-all px-3 py-2 rounded-2xl ${
+                  isActive 
+                    ? 'text-primary bg-primary-container/40' 
+                    : 'text-on-surface-variant hover:bg-surface-container-high/30'
+                }`
+              }
+            >
+              {({ isActive }) => (
+                <React.Fragment>
+                  <item.icon size={22} strokeWidth={isActive ? 2.5 : 2} />
+                  <span className={`text-[10px] font-bold uppercase tracking-tighter ${isActive ? 'opacity-100' : 'opacity-70'}`}>
+                    {item.label}
+                  </span>
+                </React.Fragment>
+              )}
+            </NavLink>
+          ))}
+        </div>
       </nav>
     </div>
   );

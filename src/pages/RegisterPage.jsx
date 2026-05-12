@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import kamiAvatar from '../assets/KAMI_avatar.png';
+import { useToast } from '../context/ToastContext';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const { showToast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     username: '',
@@ -14,6 +16,7 @@ const RegisterPage = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
+    showToast("Đăng ký thành công! Chào mừng Bi ❤️");
     // Redirect to login after "registration"
     navigate('/');
   };
