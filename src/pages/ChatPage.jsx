@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Send, Smile, Mic, MoreVertical, BookOpen, Users } from 'lucide-react';
+import kamiAvatar from '../assets/KAMI_avatar.png';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ChatPage = () => {
   const navigate = useNavigate();
   const [messages, setMessages] = useState([
-    { id: 1, text: "Chào Bi! Hôm nay Bi cảm thấy thế nào? KAMI ở đây để lắng nghe Bi nè. ✨", sender: 'kami', time: '09:00' }
+    { id: 1, text: "Chào Bi! Hôm nay Bi cảm thấy thế nào? KAMI ở đây để lắng nghe Bi nè. ✨", sender: 'KAMI', time: '09:00' }
   ]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -35,13 +36,13 @@ const ChatPage = () => {
         replyText = "Tuyệt vời! KAMI cũng thấy vui lây nè. Bi muốn chơi game hay nghe truyện nào? 🎈";
       }
 
-      const kamiReply = {
+      const KAMIReply = {
         id: Date.now(),
         text: replyText,
-        sender: 'kami',
+        sender: 'KAMI',
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
-      setMessages(prev => [...prev, kamiReply]);
+      setMessages(prev => [...prev, KAMIReply]);
       setIsTyping(false);
     }, 1500);
   };
@@ -67,7 +68,7 @@ const ChatPage = () => {
             <img 
               alt="KAMI Avatar" 
               className="object-cover w-full h-full rounded-full" 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwd1_QyzQ9NWQM6MclxoPc_PgNnkh7bvfNfIUzdIB1X6vEG1VvpGGjTP7s0zc-XfQtWzpTTrDyE1NvX9o90hBik7I1de_rGsxGHoDuCw15r4Ulta1i9UcsA3K9peU0yvCGMm4y0mwHok7EL9QG40fs8t1-g2RhfQzNzYBQud2pR8KMwkSSjPW5nQe_DBIGUtoppU8xi2S20m2Lh5dbsbW-NoyBbreYeHiX4AwPXdOYx0BRTdbZWUjFqzNoqkCfZX979vUJhsvioJNO" 
+              src={kamiAvatar} 
             />
             <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
           </div>

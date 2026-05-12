@@ -7,6 +7,7 @@ import MoodPage from './pages/MoodPage';
 import PeacefulPage from './pages/PeacefulPage';
 import StoryPage from './pages/StoryPage';
 import LearningPage from './pages/LearningPage';
+import HomePage from './pages/HomePage';
 import RemindersPage from './pages/RemindersPage';
 import ReportPage from './pages/ReportPage';
 import AlertPage from './pages/AlertPage';
@@ -19,7 +20,8 @@ function App() {
       <Routes>
         <Route path="/setup" element={<SetupPage />} />
         <Route path="/" element={<Layout />}>
-          <Route index element={<RemindersPage />} />
+          <Route index element={<HomePage />} />
+          <Route path="reminders" element={<RemindersPage />} />
           <Route path="chat" element={<ChatPage />} />
           <Route path="activities" element={<ActivitiesPage />} />
           <Route path="mood" element={<MoodPage />} />

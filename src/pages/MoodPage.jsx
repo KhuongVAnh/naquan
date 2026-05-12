@@ -22,7 +22,7 @@ const MoodPage = () => {
         <button className="w-12 h-12 flex items-center justify-center rounded-full text-primary hover:bg-primary-container/20 transition-all active:scale-90">
           <Menu size={24} />
         </button>
-        <h1 className="font-quicksand font-bold text-headline-md text-primary">KAMI Setup</h1>
+        <h1 className="font-quicksand font-bold text-headline-md text-primary">Trạng thái của bé</h1>
         <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-surface-container-high border-2 border-primary-container">
           <img 
             alt="Parent Profile" 

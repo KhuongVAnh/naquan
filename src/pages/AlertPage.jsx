@@ -1,5 +1,6 @@
 import React from 'react';
 import { Info, Frown, CheckCircle2 } from 'lucide-react';
+import kamiAvatar from '../assets/KAMI_avatar.png';
 import { useNavigate } from 'react-router-dom';
 
 const AlertPage = () => {
@@ -63,8 +64,8 @@ const AlertPage = () => {
           <div className="mt-4 flex justify-center">
             <img 
               alt="Companion Character" 
-              className="w-48 h-auto object-contain mix-blend-multiply opacity-80" 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtAvv-S44aqXGW6lXTK-5kSdbiqXXfp-mViKCAAx3IozvfbikxvBaeaQ86yiD0e5FYUUXfS4HG6983B_y1ggiZ1iitrRgL_WdQhgjlYYLcqNFUZkgdZYCYLJteo-DMto6ADZDsJooED3UkL4Fpc-QcCl3M8TZ67JdB5V79tCnpPH9hvBGs98ANLt-dJHm5vnI6zlLE-rYcQp02-ogmA-26agEP7pbmHlyjlsOqNUJP8d4up5e6fcT2UvAklj2zb5tO1IjkVsfvBfmi" 
+              className="w-48 h-auto object-contain" 
+              src={kamiAvatar} 
             />
           </div>
         </div>

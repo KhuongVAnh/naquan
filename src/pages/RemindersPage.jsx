@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Pencil, Trash2, Plus, CheckCircle2, Circle, Clock, Droplets, Pill, Moon } from 'lucide-react';
+import { Pencil, Trash2, Plus, CheckCircle2, Circle, Clock, Droplets, Pill, Moon, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const RemindersPage = () => {
@@ -34,9 +34,14 @@ const RemindersPage = () => {
 
   return (
     <div className="min-h-screen bg-background font-nunito pb-10">
-      <header className="px-margin pt-10 pb-6">
-        <h1 className="font-quicksand font-bold text-display-md text-on-surface leading-tight">Nhắc nhở hôm nay</h1>
-        <p className="text-body-lg text-on-surface-variant font-bold mt-2">Bé ơi, xem hôm nay mình có gì vui nào! 🌟</p>
+      <header className="px-margin pt-10 pb-6 flex items-start gap-4">
+        <button onClick={() => navigate(-1)} className="mt-1 p-2 bg-white rounded-full shadow-sm text-primary hover:bg-primary-container/20 transition-all active:scale-90">
+          <ArrowLeft size={24} />
+        </button>
+        <div>
+          <h1 className="font-quicksand font-bold text-display-md text-on-surface leading-tight">Nhắc nhở hôm nay</h1>
+          <p className="text-body-lg text-on-surface-variant font-bold mt-2">Bé ơi, xem hôm nay mình có gì vui nào! 🌟</p>
+        </div>
       </header>
 
       <main className="px-margin space-y-4">

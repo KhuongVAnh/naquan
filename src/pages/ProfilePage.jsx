@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowLeft, Edit2, Star, Heart, Ban, VolumeX, Droplets, Mic2, Save, Rocket, Plus } from 'lucide-react';
+import kamiAvatar from '../assets/KAMI_avatar.png';
 
 const ProfilePage = () => {
   return (
@@ -17,7 +18,7 @@ const ProfilePage = () => {
             <img 
               alt="Avatar" 
               className="w-full h-full object-cover" 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBl9Zcv8-UAgg7BaxHqzlyUtH225hCmsys-IZW8DoEEs3BI4GYR7l9ICurvobR7d1i6UQQhUbSVnqfUkF7IxfOCbd4iOA3Ze5x3nXftBMhDprOrIOHphxLUeO0vvvNukgFzIHMYlqNxCYLhAcTPfsakWVex97u0aQVaS5B8Zj57XW3KgGTAaX6wtossZK9n_KqjFKD49QP5O6MyDpmRmvaQ3lvZMMk17yGkNroj_by3gnKg4BtPEc_0I3x-RpUyJ1o6cjzWgzmEScnD" 
+              src={kamiAvatar} 
             />
           </div>
         </div>
@@ -28,7 +29,11 @@ const ProfilePage = () => {
         {/* Hero Card */}
         <div className="bg-surface-container-lowest rounded-xl p-lg shadow-sm border border-surface-variant flex flex-col md:flex-row items-center gap-lg">
           <div className="w-32 h-32 md:w-40 md:h-40 rounded-xl bg-tertiary-container/30 overflow-hidden shrink-0 flex items-center justify-center relative shadow-inner">
-            <UserIcon />
+            <img 
+              src={kamiAvatar} 
+              alt="KAMI" 
+              className="w-full h-full object-cover"
+            />
             <button className="absolute bottom-2 right-2 bg-primary text-on-primary rounded-full p-2 shadow-md hover:bg-primary/90 transition-colors">
               <Edit2 size={14} />
             </button>

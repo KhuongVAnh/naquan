@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, User, Smile, Meh, Frown, AlertCircle, MessageCircle, Book, School, Sparkles, BriefcaseMedical } from 'lucide-react';
+import kamiAvatar from '../assets/KAMI_avatar.png';
 
 const SetupPage = () => {
   const navigate = useNavigate();
@@ -31,8 +32,8 @@ const SetupPage = () => {
           <ArrowLeft size={24} />
         </button>
         <h1 className="font-quicksand font-bold text-headline-md text-primary">KAMI Setup</h1>
-        <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container overflow-hidden">
-          <User size={24} />
+        <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container overflow-hidden border-2 border-primary">
+          <img src={kamiAvatar} alt="KAMI" className="w-full h-full object-cover" />
         </div>
       </header>
 
@@ -100,7 +101,7 @@ const SetupPage = () => {
                   checked={selectedMode === idx}
                   onChange={() => {}}
                   className="text-primary focus:ring-primary h-6 w-6 border-surface-variant" 
-                  name="kami_mode" 
+                  name="KAMI_mode" 
                   type="radio" 
                 />
                 <div className="flex-1">
