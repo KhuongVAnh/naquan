@@ -1,17 +1,17 @@
 import React from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { House, MessageCircle, Gamepad2, BarChart3, User } from 'lucide-react';
+import { House, MessageCircle, Gamepad2, Bell, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Layout = () => {
   const location = useLocation();
   
   const navItems = [
-    { to: '/', icon: House, label: 'Trang chủ' },
-    { to: '/chat', icon: MessageCircle, label: 'KAMI Chat' },
-    { to: '/activities', icon: Gamepad2, label: 'Hoạt động' },
-    { to: '/reports', icon: BarChart3, label: 'Báo cáo' },
-    { to: '/profile', icon: User, label: 'Của bé' },
+    { to: '/dashboard', icon: House, label: 'Trang chủ' },
+    { to: '/dashboard/chat', icon: MessageCircle, label: 'KAMI Chat' },
+    { to: '/dashboard/activities', icon: Gamepad2, label: 'Hoạt động' },
+    { to: '/dashboard/reminders', icon: Bell, label: 'Lời nhắc' },
+    { to: '/dashboard/profile', icon: User, label: 'Của bé' },
   ];
 
   return (

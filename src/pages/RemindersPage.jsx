@@ -35,30 +35,36 @@ const RemindersPage = () => {
   return (
     <div className="min-h-screen bg-background font-nunito pb-10">
       <header className="px-margin pt-10 pb-6 flex items-start gap-4">
-        <button onClick={() => navigate(-1)} className="mt-1 p-2 bg-white rounded-full shadow-sm text-primary hover:bg-primary-container/20 transition-all active:scale-90">
+        <button onClick={() => navigate(-1)} className="mt-1 p-3 bg-white rounded-2xl shadow-sm text-primary hover:bg-primary-container/20 transition-all active:scale-90 border border-surface-container-highest">
           <ArrowLeft size={24} />
         </button>
         <div>
-          <h1 className="font-quicksand font-bold text-display-md text-on-surface leading-tight">Nhắc nhở hôm nay</h1>
-          <p className="text-body-lg text-on-surface-variant font-bold mt-2">Bé ơi, xem hôm nay mình có gì vui nào! 🌟</p>
+          <h1 className="font-quicksand font-bold text-display-md text-primary leading-tight">Lời nhắc</h1>
+          <p className="text-body-lg text-on-surface-variant font-bold mt-1">Bé ơi, xem hôm nay mình có gì vui nào! 🌟</p>
         </div>
       </header>
 
-      <main className="px-margin space-y-4">
+      <main className="px-margin space-y-md">
         <AnimatePresence>
-          {reminders.map((item) => (
+          {reminders.map((item, idx) => (
             <motion.div 
               key={item.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className={`bg-white rounded-2xl p-4 shadow-sm border-2 transition-all ${item.done ? 'border-primary-container/30 bg-primary-container/5 opacity-70' : 'border-transparent'}`}
+              className={`bg-white rounded-[2rem] p-md shadow-sm border-2 transition-all relative overflow-hidden ${item.done ? 'border-primary-container/30 bg-primary-container/5 opacity-70' : 'border-surface-container-highest shadow-[0_8px_20px_rgba(0,0,0,0.03)]'}`}
             >
-              <div className="flex items-center justify-between mb-2">
-                <span className={`font-bold text-label-lg px-3 py-1 rounded-full ${item.done ? 'bg-primary-container text-primary' : 'bg-surface-container text-on-surface-variant'}`}>
-                  {item.time}
-                </span>
-                <div className="flex gap-2">
+              <div className="flex items-center justify-between mb-md">
+                <div className="flex items-center gap-2">
+                  <div className={`w-12 h-12 rounded-2xl ${item.done ? 'bg-primary-container/50' : 'bg-surface-container-low'} flex items-center justify-center`}>
+                    <item.icon className={item.color} size={28} />
+                  </div>
+                  <span className={`font-bold text-label-lg px-4 py-2 rounded-full ${item.done ? 'bg-primary-container text-primary' : 'bg-white shadow-inner text-on-surface-variant border border-surface-container-highest'}`}>
+                    {item.time}
+                  </span>
+                </div>
+                <div className="flex gap-1">
                   <button className="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
                     <Pencil size={18} />
                   </button>
@@ -68,29 +74,34 @@ const RemindersPage = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-4">
-                <button onClick={() => toggleDone(item.id)} className="mt-1">
-                  {item.done ? <CheckCircle2 className="text-primary" size={28} /> : <Circle className="text-outline-variant" size={28} />}
+              <div className="flex items-start gap-md">
+                <button 
+                  onClick={() => toggleDone(item.id)} 
+                  className={`mt-1 w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all ${item.done ? 'bg-primary border-primary text-on-primary' : 'bg-white border-outline-variant hover:border-primary'}`}
+                >
+                  {item.done ? <CheckCircle2 size={24} /> : <div className="w-5 h-5 rounded-full" />}
                 </button>
                 <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <item.icon className={item.color} size={20} />
-                    <h2 className={`font-quicksand font-bold text-headline-md leading-tight ${item.done ? 'line-through text-on-surface-variant' : 'text-on-surface'}`}>
-                      {item.title}
-                    </h2>
-                  </div>
-                  <p className="text-sm italic text-on-surface-variant font-bold">{item.desc}</p>
+                  <h2 className={`font-quicksand font-bold text-headline-md leading-tight mb-1 ${item.done ? 'line-through text-on-surface-variant' : 'text-on-surface'}`}>
+                    {item.title}
+                  </h2>
+                  <p className="text-body-md italic text-on-surface-variant font-bold leading-snug">{item.desc}</p>
                 </div>
               </div>
+
+              {/* Decorative circle */}
+              <div className={`absolute -right-6 -bottom-6 w-24 h-24 rounded-full opacity-5 pointer-events-none ${item.color.replace('text-', 'bg-')}`} />
             </motion.div>
           ))}
         </AnimatePresence>
 
         <button 
           onClick={addReminder}
-          className="w-full py-4 border-2 border-dashed border-primary-container rounded-2xl flex items-center justify-center gap-2 text-primary font-bold hover:bg-primary-container/10 transition-all active:scale-95"
+          className="w-full py-5 border-4 border-dashed border-primary-container/40 rounded-[2rem] flex items-center justify-center gap-3 text-primary font-bold text-headline-sm hover:bg-primary-container/10 transition-all active:scale-95 group"
         >
-          <Plus size={20} />
+          <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center group-hover:scale-110 transition-transform">
+            <Plus size={24} />
+          </div>
           Thêm nhắc nhở mới
         </button>
       </main>
