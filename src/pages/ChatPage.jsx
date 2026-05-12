@@ -4,6 +4,7 @@ import kamiAvatar from '../assets/KAMI_avatar.png';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import GeminiResponse from '../components/GeminiResponse';
 
 const ChatPage = () => {
   const navigate = useNavigate();
@@ -160,23 +161,12 @@ const ChatPage = () => {
       <main ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto p-4 space-y-4 no-scrollbar bg-[#F8FAFC]">
         <AnimatePresence initial={false}>
           {messages.map((msg) => (
-            <motion.div 
+            <GeminiResponse 
               key={msg.id}
-              initial={{ opacity: 0, y: 10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-            >
-              <div className={`max-w-[85%] p-4 rounded-2xl shadow-sm border ${
-                msg.sender === 'user' 
-                ? 'bg-primary text-on-primary rounded-tr-none border-primary' 
-                : 'bg-white text-on-surface rounded-tl-none border-surface-container-highest'
-              }`}>
-                <p className="text-body-md font-bold leading-relaxed">{msg.text}</p>
-                <p className={`text-[10px] mt-1 opacity-70 font-bold ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
-                  {msg.time}
-                </p>
-              </div>
-            </motion.div>
+              text={msg.text}
+              time={msg.time}
+              sender={msg.sender}
+            />
           ))}
         </AnimatePresence>
         
