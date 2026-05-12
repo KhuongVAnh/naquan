@@ -16,9 +16,9 @@ const MoodPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background flex flex-col pt-4">
+    <div className="flex-1 flex flex-col min-h-0 bg-background pt-4">
       {/* Header */}
-      <header className="w-full flex items-center justify-between px-margin py-base z-10 sticky top-0 bg-background/80 backdrop-blur-md">
+      <header className="w-full flex items-center justify-between px-margin py-base z-10 shrink-0 bg-background/80 backdrop-blur-md">
         <button className="w-12 h-12 flex items-center justify-center rounded-full text-primary hover:bg-primary-container/20 transition-all active:scale-90">
           <Menu size={24} />
         </button>
@@ -33,7 +33,7 @@ const MoodPage = () => {
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow flex flex-col px-margin pb-10 pt-md">
+      <main className="flex-1 min-h-0 overflow-y-auto flex flex-col px-margin pb-10 pt-md no-scrollbar">
         <section className="mb-lg text-center">
           <h2 className="font-quicksand font-bold text-display-md text-primary mb-sm leading-tight">Hôm nay Bi cảm thấy sao?</h2>
           <p className="text-body-lg text-on-surface-variant">Chọn một cảm xúc để chia sẻ với KAMI nhé.</p>

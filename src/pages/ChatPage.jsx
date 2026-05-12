@@ -57,9 +57,9 @@ const ChatPage = () => {
   ];
 
   return (
-    <div className="flex flex-col h-screen bg-background font-nunito">
+    <div className="flex flex-col flex-1 min-h-0 bg-background font-nunito">
       {/* Header */}
-      <header className="bg-white border-b border-surface-container-highest px-4 py-3 flex items-center justify-between sticky top-0 z-50">
+      <header className="bg-white border-b border-surface-container-highest px-4 py-3 flex items-center justify-between shrink-0 z-50">
         <div className="flex items-center gap-3">
           <button onClick={() => navigate(-1)} className="p-2 rounded-full hover:bg-surface-container transition-colors">
             <ArrowLeft size={24} className="text-on-surface-variant" />
@@ -83,7 +83,7 @@ const ChatPage = () => {
       </header>
 
       {/* Chat Area */}
-      <main className="flex-1 overflow-y-auto p-4 space-y-4 no-scrollbar bg-[#F8FAFC]">
+      <main className="flex-1 min-h-0 overflow-y-auto p-4 space-y-4 no-scrollbar bg-[#F8FAFC]">
         <AnimatePresence initial={false}>
           {messages.map((msg) => (
             <motion.div 
@@ -132,7 +132,7 @@ const ChatPage = () => {
       </main>
 
       {/* Input Area */}
-      <footer className="bg-white border-t border-surface-container-highest p-4 pb-10 space-y-4">
+      <footer className="bg-white border-t border-surface-container-highest p-4 space-y-4 shrink-0">
         {/* Quick Emotions */}
         <div className="flex gap-3 overflow-x-auto no-scrollbar pb-1">
           {emotions.map((item, idx) => (

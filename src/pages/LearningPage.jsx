@@ -12,9 +12,9 @@ const LearningPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F9FAFB] flex flex-col font-nunito">
+    <div className="flex-1 flex flex-col min-h-0 bg-[#F9FAFB] font-nunito">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-md px-6 py-4 flex items-center justify-between shadow-sm">
+      <header className="shrink-0 z-10 bg-white/80 backdrop-blur-md px-6 py-4 flex items-center justify-between shadow-sm">
         <Link to="/activities" className="p-2 -ml-2 rounded-full hover:bg-gray-100 transition-colors">
           <ChevronLeft size={24} className="text-gray-600" />
         </Link>
@@ -22,7 +22,7 @@ const LearningPage = () => {
       </header>
 
       {/* Main Content */}
-      <main className="px-6 py-6 flex flex-col gap-6 pb-10">
+      <main className="flex-1 min-h-0 overflow-y-auto px-6 py-6 no-scrollbar flex flex-col gap-6 pb-10">
         <section className="text-center space-y-2">
           <h2 className="text-2xl font-extrabold text-primary font-quicksand">Hôm nay Bi muốn khám phá gì?</h2>
           <p className="text-sm text-on-surface-variant font-bold">Chọn một chủ đề để vừa chơi vừa học nhé!</p>

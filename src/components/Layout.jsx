@@ -15,7 +15,7 @@ const Layout = () => {
   ];
 
   return (
-    <div className="h-full bg-background flex flex-col max-w-md mx-auto relative shadow-2xl overflow-hidden border-x border-gray-100">
+    <div className="h-full bg-background flex flex-col mx-auto relative overflow-hidden">
       {/* Global Background Decorations */}
       <div className="absolute inset-0 bg-pattern pointer-events-none" />
       <div className="floating-blob bg-primary/10 w-64 h-64 -top-20 -left-20" />

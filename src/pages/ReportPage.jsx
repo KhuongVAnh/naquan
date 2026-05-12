@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 const ReportPage = () => {
   const navigate = useNavigate();
   return (
-    <div className="min-h-screen bg-gray-50 pb-10">
+    <div className="flex-1 flex flex-col min-h-0 bg-gray-50">
       {/* Header */}
-      <header className="pt-12 pb-4 px-6 bg-secondary text-white rounded-b-xl shadow-sm relative z-10">
+      <header className="pt-12 pb-4 px-6 bg-secondary text-white rounded-b-xl shadow-sm shrink-0 z-10">
         <div className="flex items-center justify-between">
           <button 
             onClick={() => navigate(-1)}
@@ -21,7 +21,7 @@ const ReportPage = () => {
       </header>
 
       {/* Main Content */}
-      <main className="px-margin pt-6 space-y-6">
+      <main className="flex-1 min-h-0 overflow-y-auto px-margin pt-6 space-y-6 pb-10 no-scrollbar">
         <div>
           <h2 className="text-2xl font-extrabold font-quicksand text-on-surface">Báo cáo hôm nay</h2>
           <p className="text-sm text-on-surface-variant font-medium">Tóm tắt hoạt động của bé</p>

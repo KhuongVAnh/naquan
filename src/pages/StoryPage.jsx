@@ -12,9 +12,9 @@ const StoryPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background flex flex-col font-nunito">
+    <div className="flex-1 flex flex-col min-h-0 bg-background font-nunito">
       {/* Header */}
-      <header className="bg-white shadow-sm px-4 py-4 flex items-center sticky top-0 z-10">
+      <header className="bg-white shadow-sm px-4 py-4 flex items-center shrink-0 z-10">
         <Link to="/dashboard/activities" className="p-2 -ml-2 rounded-full hover:bg-gray-100 transition-colors">
           <ChevronLeft size={24} className="text-gray-600" />
         </Link>
@@ -22,7 +22,7 @@ const StoryPage = () => {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 p-4 pb-10">
+      <main className="flex-1 min-h-0 overflow-y-auto p-4 pb-10 no-scrollbar">
         {/* Intro Text */}
         <div className="mb-6 text-center">
           <p className="text-on-surface-variant font-bold text-lg">Chọn một câu chuyện nhé! ✨</p>

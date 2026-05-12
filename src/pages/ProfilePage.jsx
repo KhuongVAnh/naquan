@@ -6,9 +6,9 @@ import kamiAvatar from '../assets/KAMI_avatar.png';
 const ProfilePage = () => {
   const navigate = useNavigate();
   return (
-    <div className="min-h-screen bg-background pt-20">
+    <div className="flex-1 flex flex-col min-h-0 bg-background">
       {/* Header */}
-      <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md">
+      <header className="shrink-0 bg-background/80 backdrop-blur-md z-10">
         <div className="flex items-center justify-between px-margin py-base w-full max-w-7xl mx-auto">
           <button 
             onClick={() => navigate(-1)}
@@ -30,7 +30,7 @@ const ProfilePage = () => {
       </header>
 
       {/* Main Content */}
-      <main className="px-margin w-full max-w-3xl mx-auto space-y-md mt-sm">
+      <main className="flex-1 min-h-0 overflow-y-auto px-margin w-full max-w-3xl mx-auto space-y-md mt-sm pb-10 no-scrollbar">
         {/* Hero Card */}
         <div className="bg-surface-container-lowest rounded-xl p-lg shadow-sm border border-surface-variant flex flex-col md:flex-row items-center gap-lg">
           <div className="w-32 h-32 md:w-40 md:h-40 rounded-xl bg-tertiary-container/30 overflow-hidden shrink-0 flex items-center justify-center relative shadow-inner">

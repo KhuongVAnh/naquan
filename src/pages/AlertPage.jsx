@@ -7,7 +7,7 @@ const AlertPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-margin bg-background">
+    <div className="flex-1 flex flex-col min-h-0 items-center justify-center p-margin bg-background overflow-y-auto no-scrollbar">
       <main className="w-full max-w-md bg-surface-container-lowest rounded-xl shadow-lg overflow-hidden flex flex-col border border-surface-container-low">
         {/* Header */}
         <div className="bg-primary-container px-margin py-lg rounded-t-xl flex flex-col items-center text-center relative overflow-hidden">
