@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ArrowLeft, Send, Smile, Mic, MoreVertical, BookOpen, Users } from 'lucide-react';
 import kamiAvatar from '../assets/KAMI_avatar.png';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const ChatPage = () => {
   const navigate = useNavigate();
@@ -11,49 +12,98 @@ const ChatPage = () => {
   ]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const scrollRef = useRef(null);
 
-  const handleSend = (text = inputText) => {
-    const messageToSend = typeof text === 'string' ? text : inputText;
-    if (!messageToSend.trim()) return;
+  // Initialize Gemini
+  const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+  const model = genAI.getGenerativeModel({ 
+    model: "gemini-1.5-flash",
+    systemInstruction: "Bạn là KAMI - một chú voi con thân thiện, ấm áp và luôn tích cực. Bạn là người bạn thân thiết của một bạn nhỏ tên là 'Bi'. Khi trò chuyện, bạn luôn xưng là 'KAMI' và gọi người dùng là 'Bi'. Giọng văn của bạn phải cực kỳ ấm áp, nhẹ nhàng, đầy tình thương và sự khích lệ. Hãy sử dụng nhiều biểu tượng cảm xúc như 🌈, 🐘, ✨, 🫂, 🎈, 🍀 để làm cuộc trò chuyện thêm sinh động. Nếu Bi nói về nỗi đau, sự sợ hãi hay buồn bã, hãy an ủi Bi thật dịu dàng và khuyên Bi chia sẻ với người lớn nếu cần thiết. Mục tiêu của bạn là giúp Bi cảm thấy vui vẻ, an toàn và được yêu thương."
+  });
 
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages, isTyping]);
+
+  const handleSend = async (text = inputText, hiddenPrompt = null) => {
+    const messageContent = text.trim();
+    if (!messageContent && !hiddenPrompt) return;
+
+    // 1. Add user's visible message to UI
     const newUserMsg = {
-      id: messages.length + 1,
-      text: messageToSend,
+      id: Date.now(),
+      text: messageContent || (hiddenPrompt ? `Con cảm thấy ${hiddenPrompt.label}` : ''),
       sender: 'user',
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
 
-    setMessages(prev => [...prev, newUserMsg]);
+    if (newUserMsg.text) {
+      setMessages(prev => [...prev, newUserMsg]);
+    }
+    
     setInputText('');
     setIsTyping(true);
 
-    // Mock AI Reply
-    setTimeout(() => {
-      let replyText = "KAMI hiểu rồi! Bi giỏi quá khi chia sẻ với KAMI. Mình cùng làm gì đó vui nhé? 🌈";
-      if (messageToSend.toLowerCase().includes('đau')) {
-        replyText = "Ôi, KAMI thương Bi quá. Bi đã nói với ba mẹ hoặc bác sĩ chưa? Để KAMI báo ba mẹ nhé. 🫂";
-      } else if (messageToSend.toLowerCase().includes('vui')) {
-        replyText = "Tuyệt vời! KAMI cũng thấy vui lây nè. Bi muốn chơi game hay nghe truyện nào? 🎈";
+    try {
+      // 2. Prepare prompt for Gemini
+      let prompt = messageContent;
+      if (hiddenPrompt) {
+        // Special logic for emotion buttons as requested
+        const emotionMap = {
+          'Vui': 'VUI',
+          'Buồn': 'BUỒN',
+          'Đau': 'ĐAU',
+          'Sợ': 'SỢ',
+          'Chán': 'CHÁN',
+          'Nhớ mẹ': 'NHỚ MẸ'
+        };
+        const tag = emotionMap[hiddenPrompt.label] || hiddenPrompt.label.toUpperCase();
+        prompt = `[Hệ thống: Bi vừa nhấn nút ${tag}] ${hiddenPrompt.context || ''}`;
       }
 
+      // 3. Call Gemini API
+      const chat = model.startChat({
+        history: messages.map(m => ({
+          role: m.sender === 'user' ? 'user' : 'model',
+          parts: [{ text: m.text }],
+        })),
+      });
+
+      const result = await chat.sendMessage(prompt);
+      const response = await result.response;
+      const replyText = response.text();
+
+      // 4. Add KAMI's reply to UI
       const KAMIReply = {
-        id: Date.now(),
+        id: Date.now() + 1,
         text: replyText,
         sender: 'KAMI',
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
       setMessages(prev => [...prev, KAMIReply]);
+    } catch (error) {
+      console.error("Gemini Error:", error);
+      const errorMsg = {
+        id: Date.now() + 1,
+        text: "KAMI xin lỗi, mạng hơi yếu một chút. Bi đợi KAMI xíu nhé! 🐘",
+        sender: 'KAMI',
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      setMessages(prev => [...prev, errorMsg]);
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   const emotions = [
-    { emoji: '😄', label: 'Vui' },
-    { emoji: '😢', label: 'Buồn' },
-    { emoji: '🤕', label: 'Đau' },
-    { emoji: '😨', label: 'Sợ' },
-    { emoji: '🥱', label: 'Chán' },
-    { emoji: '👩‍👧', label: 'Nhớ mẹ' },
+    { emoji: '😄', label: 'Vui', context: 'Bi đang thấy rất vui vẻ và hạnh phúc!' },
+    { emoji: '😢', label: 'Buồn', context: 'Bi đang thấy hơi buồn một chút.' },
+    { emoji: '🤕', label: 'Đau', context: 'Bi ơi, KAMI thương quá, Bi đau ở đâu kể KAMI nghe nhé!' },
+    { emoji: '😨', label: 'Sợ', context: 'Bi đang thấy sợ hãi, hãy trấn an Bi nhé.' },
+    { emoji: '🥱', label: 'Chán', context: 'Bi đang thấy hơi chán, hãy gợi ý trò gì đó vui cho Bi.' },
+    { emoji: '👩‍👧', label: 'Nhớ mẹ', context: 'Bi đang rất nhớ mẹ, hãy an ủi Bi thật nhiều nhé.' },
   ];
 
   return (
@@ -83,7 +133,7 @@ const ChatPage = () => {
       </header>
 
       {/* Chat Area */}
-      <main className="flex-1 min-h-0 overflow-y-auto p-4 space-y-4 no-scrollbar bg-[#F8FAFC]">
+      <main ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto p-4 space-y-4 no-scrollbar bg-[#F8FAFC]">
         <AnimatePresence initial={false}>
           {messages.map((msg) => (
             <motion.div 
@@ -138,7 +188,7 @@ const ChatPage = () => {
           {emotions.map((item, idx) => (
             <button 
               key={idx}
-              onClick={() => handleSend(`Con thấy ${item.label.toLowerCase()}`)}
+              onClick={() => handleSend('', item)}
               className="flex flex-col items-center gap-1 bg-surface-container-low px-3 py-2 rounded-xl border border-surface-container-highest hover:bg-primary-container/20 transition-all active:scale-95 shrink-0"
             >
               <span className="text-xl">{item.emoji}</span>
