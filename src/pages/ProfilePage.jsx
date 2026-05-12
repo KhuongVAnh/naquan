@@ -1,14 +1,19 @@
 import React from 'react';
 import { ArrowLeft, Edit2, Star, Heart, Ban, VolumeX, Droplets, Mic2, Save, Rocket, Plus } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import kamiAvatar from '../assets/KAMI_avatar.png';
 
 const ProfilePage = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-background pt-20">
       {/* Header */}
       <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md">
         <div className="flex items-center justify-between px-margin py-base w-full max-w-7xl mx-auto">
-          <button className="flex items-center justify-center p-2 rounded-full hover:bg-primary-container/20 transition-all active:scale-90">
+          <button 
+            onClick={() => navigate(-1)}
+            className="flex items-center justify-center p-2 rounded-full hover:bg-primary-container/20 transition-all active:scale-90"
+          >
             <ArrowLeft className="text-primary" size={24} />
           </button>
           <h1 className="font-quicksand font-bold text-headline-md text-primary tracking-tight">

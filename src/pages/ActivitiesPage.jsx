@@ -4,10 +4,10 @@ import { BookOpen, Gamepad2, Heart, Sparkles } from 'lucide-react';
 
 const ActivitiesPage = () => {
   const activities = [
-    { to: '/mood', icon: Heart, label: 'Cảm xúc', color: 'bg-primary-container', text: 'primary' },
-    { to: '/story', icon: BookOpen, label: 'Kể chuyện', color: 'bg-secondary-container', text: 'secondary' },
-    { to: '/learning', icon: Sparkles, label: 'Học vui', color: 'bg-tertiary-container', text: 'tertiary' },
-    { to: '/peaceful', icon: Gamepad2, label: 'Bình yên', color: 'bg-surface-variant', text: 'on-surface-variant' },
+    { to: '/dashboard/mood', icon: Heart, label: 'Cảm xúc', color: 'bg-primary-container', text: 'primary' },
+    { to: '/dashboard/story', icon: BookOpen, label: 'Kể chuyện', color: 'bg-secondary-container', text: 'secondary' },
+    { to: '/dashboard/learning', icon: Sparkles, label: 'Học vui', color: 'bg-tertiary-container', text: 'tertiary' },
+    { to: '/dashboard/peaceful', icon: Gamepad2, label: 'Bình yên', color: 'bg-surface-variant', text: 'on-surface-variant' },
   ];
 
   return (

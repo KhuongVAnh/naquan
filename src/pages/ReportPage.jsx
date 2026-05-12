@@ -1,13 +1,18 @@
 import React from 'react';
 import { ArrowLeft, Clock, Smile, Puzzle, MessageSquare, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const ReportPage = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gray-50 pb-10">
       {/* Header */}
       <header className="pt-12 pb-4 px-6 bg-secondary text-white rounded-b-xl shadow-sm relative z-10">
         <div className="flex items-center justify-between">
-          <button className="p-2 -ml-2 rounded-full hover:bg-white/20 transition-colors active:scale-90">
+          <button 
+            onClick={() => navigate(-1)}
+            className="p-2 -ml-2 rounded-full hover:bg-white/20 transition-colors active:scale-90"
+          >
             <ArrowLeft size={24} />
           </button>
           <h1 className="text-xl font-bold font-quicksand tracking-wide">Trang dành cho phụ huynh</h1>

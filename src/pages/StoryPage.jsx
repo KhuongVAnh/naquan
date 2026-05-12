@@ -15,7 +15,7 @@ const StoryPage = () => {
     <div className="min-h-screen bg-background flex flex-col font-nunito">
       {/* Header */}
       <header className="bg-white shadow-sm px-4 py-4 flex items-center sticky top-0 z-10">
-        <Link to="/activities" className="p-2 -ml-2 rounded-full hover:bg-gray-100 transition-colors">
+        <Link to="/dashboard/activities" className="p-2 -ml-2 rounded-full hover:bg-gray-100 transition-colors">
           <ChevronLeft size={24} className="text-gray-600" />
         </Link>
         <h1 className="text-xl font-bold text-center flex-1 pr-8 text-primary font-quicksand">KAMI kể chuyện</h1>

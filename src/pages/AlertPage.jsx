@@ -73,7 +73,7 @@ const AlertPage = () => {
         {/* Action Button */}
         <div className="p-margin pt-0 bg-surface-container-lowest mt-auto">
           <button 
-            onClick={() => navigate('/reports')}
+            onClick={() => navigate('/dashboard/reports')}
             className="w-full bg-primary hover:bg-primary/90 text-on-primary font-bold py-4 rounded-full shadow-md transition-all active:scale-95"
           >
             Đã hiểu

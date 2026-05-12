@@ -44,7 +44,7 @@ const MoodPage = () => {
           {moods.map((mood, idx) => (
             <button 
               key={idx} 
-              onClick={() => navigate('/chat')}
+              onClick={() => navigate('/dashboard/chat')}
               className={`flex flex-col items-center justify-center p-md ${mood.color} rounded-xl shadow-sm hover:shadow-md transition-all duration-300 active:scale-95 border-2 border-transparent focus:border-secondary`}
             >
               <div className="w-20 h-20 mb-sm flex items-center justify-center rounded-full bg-white/40 shadow-sm">
@@ -55,9 +55,11 @@ const MoodPage = () => {
           ))}
         </section>
 
-        {/* Action Button */}
         <div className="mt-auto flex justify-center">
-          <button className="bg-primary text-on-primary font-quicksand font-bold text-headline-md py-md px-xl rounded-full shadow-lg hover:bg-primary/90 transition-all active:scale-95 flex items-center gap-sm w-full max-w-md justify-center">
+          <button 
+            onClick={() => navigate('/dashboard/chat')}
+            className="bg-primary text-on-primary font-quicksand font-bold text-headline-md py-md px-xl rounded-full shadow-lg hover:bg-primary/90 transition-all active:scale-95 flex items-center gap-sm w-full max-w-md justify-center"
+          >
             <MessageCircle size={24} />
             Nói với KAMI
           </button>

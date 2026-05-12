@@ -121,10 +121,10 @@ const ChatPage = () => {
         {/* Quick Actions (only show if no messages yet or after some time) */}
         {!isTyping && messages.length > 1 && (
           <div className="flex flex-wrap gap-2 justify-center pt-4">
-             <button onClick={() => navigate('/story')} className="bg-secondary-container/50 text-secondary font-bold text-xs px-4 py-2 rounded-full border border-secondary/20 flex items-center gap-1">
+             <button onClick={() => navigate('/dashboard/story')} className="bg-secondary-container/50 text-secondary font-bold text-xs px-4 py-2 rounded-full border border-secondary/20 flex items-center gap-1">
                <BookOpen size={14} /> KAMI kể chuyện
              </button>
-             <button onClick={() => navigate('/alerts')} className="bg-error-container/50 text-error font-bold text-xs px-4 py-2 rounded-full border border-error/20 flex items-center gap-1">
+             <button onClick={() => navigate('/dashboard/alerts')} className="bg-error-container/50 text-error font-bold text-xs px-4 py-2 rounded-full border border-error/20 flex items-center gap-1">
                <Users size={14} /> Con cần người lớn
              </button>
           </div>
